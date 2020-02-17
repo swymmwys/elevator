@@ -29,16 +29,24 @@ export default class ArrivedState extends BaseElevatorState {
 
   public closeDoor(): void {
     this.door.close(() => {
+      const next = this.ctrl.nextFloors?.next;
+      const idle =
+        !next && !this.ctrl.downQueue.next && !this.ctrl.upQueue.next;
+
+      if (idle) {
+        this.eventEmitter.emit(new IdleEvent());
+        return;
+      }
+
       const movingUp = this.ctrl.nextFloors instanceof UpQueue;
       const movingDown = this.ctrl.nextFloors instanceof DownQueue;
-      const next = this.ctrl.nextFloors?.next;
 
       const moveUp =
         (movingUp && next) || (movingDown && !next) ? new MoveUpEvent() : null;
 
       const moveDown =
         (movingDown && next) || (movingUp && !next)
-          ? new MoveDownEvent() 
+          ? new MoveDownEvent()
           : null;
 
       this.eventEmitter.emit(moveUp ?? moveDown ?? new IdleEvent());

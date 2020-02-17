@@ -3,19 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css">
     <title>Elevator</title>
   </head>
   <body>
+    <div id="floorDisplay">
+      <div id="currentFloor"></div>
+      <div id="currentQueue"></div>
+    </div>
     <pre id="info"></pre>
     <br>
-    <input id="floorSelector" type="number" />
+    <input id="floorSelector" type="number" placeholder="floor number" />
     <br>
+    <button id="selectFloor">select floor</button>
     <button id="callUp">call up</button>
     <button id="callDown">call down</button>
-    <button id="selectFloor">select floor</button>
-    <br>
+    <!-- <br>
     <button id="stop">stop</button>
-    <button id="continue">continue</button>
+    <button id="continue">continue</button> -->
 
 
 

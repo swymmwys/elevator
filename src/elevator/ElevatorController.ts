@@ -55,6 +55,11 @@ export default class ElevatorController {
     this._nextFloors.addFrom(this.downQueue);
   }
 
+  public dismissNextFloors(): void {
+    this._nextFloors = undefined;
+    this.callOnChange();
+  }
+
   public getDirection(): string {
     const upDirection = this.nextFloors instanceof UpQueue ? "up" : null;
     const downDirection = this.nextFloors instanceof DownQueue ? "down" : null;

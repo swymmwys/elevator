@@ -2,10 +2,17 @@ class App {
   async start() {
     const info = document.querySelector("#info");
     const floorSelector = document.querySelector("#floorSelector");
+    const floorDisplay = document.querySelector("#floorDisplay");
+    const currentFloor = document.querySelector("#currentFloor");
+    const currentQueue = document.querySelector("#currentQueue");
 
     this.websocket = new WebSocket("ws://localhost:3000");
     this.websocket.addEventListener("message", event => {
+      const data = JSON.parse(event.data);
       info.innerHTML = event.data;
+      currentFloor.innerHTML = data.currentFloor;
+      floorDisplay.className = data.direction == 'none' ? '' : data.direction;
+      currentQueue.innerHTML = data.queue.join('<br />');
     });
 
     document.body
@@ -29,17 +36,17 @@ class App {
         floorSelector.value = "";
       });
 
-    document.body
-      .querySelector("#stop")
-      .addEventListener("click", () => {
-        this.send({ name: "stop" });  
-      });
+    // document.body
+    //   .querySelector("#stop")
+    //   .addEventListener("click", () => {
+    //     this.send({ name: "stop" });  
+    //   });
 
-    document.body
-      .querySelector("#continue")
-      .addEventListener("click", () => {
-        this.send({ name: "continue" });
-      });
+    // document.body
+    //   .querySelector("#continue")
+    //   .addEventListener("click", () => {
+    //     this.send({ name: "continue" });
+    //   });
   }
 
   send(data) {

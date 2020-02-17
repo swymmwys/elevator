@@ -2,6 +2,7 @@ import BaseElevatorState from "./BaseElevatorState";
 import ArrivedEvent from "../events/ArrivedEvent";
 import MoveUpEvent from "../events/MoveUpEvent";
 import MoveDownEvent from "../events/MoveDownEvent";
+import Event from "../../fsm/Event";
 
 export default class IdleState extends BaseElevatorState {
   public selectFloor(floor: number): void {
@@ -21,6 +22,11 @@ export default class IdleState extends BaseElevatorState {
 
   public callDownFrom(floor: number): void {
     this.selectFloor(floor);
+  }
+
+  activate(event: Event): void {
+    super.activate(event);
+    this.ctrl.dismissNextFloors();
   }
 
   public openDoor(): void {
