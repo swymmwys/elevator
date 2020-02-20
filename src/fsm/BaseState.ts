@@ -2,7 +2,7 @@ import IEventEmitter from "./IEventEmitter";
 import Event from "./Event";
 
 export default abstract class BaseState {
-  constructor(protected readonly eventEmitter: IEventEmitter) {}
+  protected constructor(protected readonly eventEmitter: IEventEmitter) {}
 
   protected active = false;
 

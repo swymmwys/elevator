@@ -2,6 +2,9 @@ import ElevatorQueue from "./queue/ElevatorQueue";
 import DownQueue from "./queue/DownQueue";
 import UpQueue from "./queue/UpQueue";
 import ElevatorStatus from "./ElevatorStatus";
+import BaseState from "../fsm/BaseState";
+import MovingState from "./states/MovingState";
+import ArrivedState from "./states/ArrivedState";
 
 export default class ElevatorController {
   private _currentFloor: number = 0;
@@ -15,7 +18,10 @@ export default class ElevatorController {
     this.callOnChange();
   }
 
-  constructor(private readonly onChange?: (status: ElevatorStatus) => void) {}
+  constructor(
+    private readonly getCurrentState: () => BaseState,
+    private readonly onChange?: (status: ElevatorStatus) => void
+  ) {}
 
   public readonly upQueue: ElevatorQueue = new UpQueue();
   public readonly downQueue: ElevatorQueue = new DownQueue();
@@ -27,7 +33,7 @@ export default class ElevatorController {
   }
 
   public queueFloor(nextFloor: number): void {
-    if (nextFloor == this.currentFloor || !nextFloor) {
+    if (nextFloor == this.currentFloor || nextFloor == null) {
       return;
     }
 
@@ -35,6 +41,8 @@ export default class ElevatorController {
     const downQueue = nextFloor < this.currentFloor ? this.downQueue : null;
 
     (upQueue ?? downQueue)!.add(nextFloor);
+
+    this.callOnChange();
   }
 
   public useUpQueue(): void {
@@ -68,12 +76,15 @@ export default class ElevatorController {
   }
 
   public getStatus(): ElevatorStatus {
+    const currentState = this.getCurrentState();
     return new ElevatorStatus(
       this._nextFloors?.toArray() ?? [],
       this.upQueue.toArray(),
       this.downQueue.toArray(),
       this.currentFloor,
-      this.getDirection()
+      this.getDirection(),
+        currentState instanceof MovingState,
+        currentState instanceof ArrivedState,
     );
   }
 

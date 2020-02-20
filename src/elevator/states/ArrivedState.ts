@@ -12,7 +12,24 @@ export default class ArrivedState extends BaseElevatorState {
       return;
     }
 
-    this.ctrl.queueFloor(floor);
+    if (!this.ctrl.nextFloors) {
+      const up = floor > this.ctrl.currentFloor ? () => this.ctrl.useUpQueue() : null;
+      const down = floor > this.ctrl.currentFloor ? () => this.ctrl.useDownQueue() : null;
+
+      (up ?? down)!();
+    }
+
+    const onTheWay =
+      (floor > this.ctrl.currentFloor &&
+        this.ctrl.nextFloors instanceof UpQueue) ||
+      (floor < this.ctrl.currentFloor &&
+        this.ctrl.nextFloors instanceof DownQueue);
+
+    if (onTheWay && this.ctrl.nextFloors) {
+      this.ctrl.nextFloors.add(floor);
+    } else {
+      this.ctrl.queueFloor(floor);
+    }
   }
 
   public callUpFrom(floor: number): void {

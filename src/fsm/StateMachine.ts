@@ -6,6 +6,9 @@ export default abstract class StateMachine<T extends BaseState> implements IEven
   protected currentState!: T;
   protected readonly transitions = new Map<T, Map<string, T>>();
 
+  protected constructor(private readonly onChange?: () => void) {
+  }
+
   protected addTransition(from: T, eventName: string, to: T): void {
     let transition = this.transitions.get(from);
 
@@ -27,10 +30,12 @@ export default abstract class StateMachine<T extends BaseState> implements IEven
         if (nextState == this.currentState) {
           return;
         }
-        
-        this.currentState.deactivate(event)
+
+        this.currentState.deactivate(event);
         this.currentState = nextState;
         this.currentState.activate(event);
+
+        this.onChange && this.onChange();
       } else {
         console.warn(`There is no transition for event: ${event.name}`);
       }

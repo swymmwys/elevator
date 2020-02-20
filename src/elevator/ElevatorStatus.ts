@@ -5,5 +5,7 @@ export default class ElevatorStatus {
     public readonly downQueue: number[],
     public readonly currentFloor: number,
     public readonly direction: string,
+    public readonly moving: boolean,
+    public readonly arrived: boolean,
   ) {}
 }

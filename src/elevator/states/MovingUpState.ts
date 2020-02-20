@@ -23,9 +23,4 @@ export default class MovingUpState extends MovingState {
     this.ctrl.useUpQueue();
     super.activate(event);
   }
-
-  // public deactivate(event?: Event): void {
-  //   this.ctrl.upQueue.addFrom(this.ctrl.nextFloors!);
-  //   super.deactivate(event);
-  // }
 }

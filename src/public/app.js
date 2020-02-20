@@ -11,8 +11,18 @@ class App {
       const data = JSON.parse(event.data);
       info.innerHTML = event.data;
       currentFloor.innerHTML = data.currentFloor;
-      floorDisplay.className = data.direction == 'none' ? '' : data.direction;
+      floorDisplay.className = data.direction === 'none' ? '' : data.direction;
       currentQueue.innerHTML = data.queue.join('<br />');
+      if (data.moving) {
+          floorDisplay.classList.add('moving');
+      } else {
+          floorDisplay.classList.remove('moving');
+      }
+      if (data.arrived) {
+          floorDisplay.classList.add('arrived');
+      } else {
+          floorDisplay.classList.remove('arrived');
+      }
     });
 
     document.body

@@ -12,9 +12,9 @@ import ElevatorDoor from "./ElevatorDoor";
 
 export default class ElevatorMachine extends StateMachine<BaseElevatorState> implements IElevator {
   private constructor(onChange?: (status: ElevatorStatus) => void) {
-    super();
+    super(()=> onChange && onChange(this.getStatus()));
 
-    const controller = new ElevatorController(onChange);
+    const controller = new ElevatorController(() => this.currentState, onChange);
     const door = new ElevatorDoor();
 
     const idleState = new IdleState(this, controller, door);

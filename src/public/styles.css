@@ -1,16 +1,29 @@
+:root {
+  --orange: #fe9605;
+  --aqua: #44fdd2;
+}
+
 #floorDisplay {
   border: 20px solid #d1e3ed;
   width: 200px;
   height: 200px;
   background: #313237;
   position: relative;
-  color: #fe9605;
+  color: var(--orange);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 8em;
-  text-shadow: #fe9605 0 0 13px;
+  text-shadow: var(--orange) 0 0 13px;
   font-family: monospace;
+}
+
+#floorDisplay.moving {
+  animation: moving 1s linear infinite;
+}
+
+#floorDisplay.arrived {
+  border-bottom-color: var(--orange);
 }
 
 #floorDisplay:before {
@@ -19,18 +32,18 @@
   width: 0;
   height: 0;
   left: 130%;
-  box-shadow: #44fdd2 2px 2px 10px 0px;
+  box-shadow: var(--aqua) 2px 2px 10px 0;
 }
 
 #floorDisplay.down:before {
-  border: #44fdd2 solid 50px;
+  border: var(--aqua) solid 50px;
   border-top-color: transparent;
   border-left-color: transparent;
   transform: rotate(45deg);
 }
 
 #floorDisplay.up:before {
-  border: #44fdd2 solid 50px;
+  border: var(--aqua) solid 50px;
   border-top-color: transparent;
   border-left-color: transparent;
   transform: rotate(-135deg);
@@ -78,4 +91,19 @@ body {
   font-size: 3rem;
   text-align: center;
   border: 10px solid #060606;
+}
+
+@keyframes moving {
+  25% {
+    border-top-color: var(--aqua);
+  }
+  50% {
+    border-right-color: var(--aqua);
+  }
+  75% {
+    border-bottom-color: var(--aqua);
+  }
+  100% {
+    border-left-color: var(--aqua);
+  }
 }

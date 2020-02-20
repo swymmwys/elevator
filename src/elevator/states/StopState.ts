@@ -18,11 +18,11 @@ export default class StopState extends BaseElevatorState {
   }
 
   public callUpFrom(floor: number): void {
-    this.ctrl.upQueue.add(floor);
+    this.selectFloor(floor);
   }
 
   public callDownFrom(floor: number): void {
-    this.ctrl.downQueue.add(floor);
+    this.selectFloor(floor);
   }
 
   public stop(): void {

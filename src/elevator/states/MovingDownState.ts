@@ -22,9 +22,4 @@ export default class MovingDownState extends MovingState {
     this.ctrl.useDownQueue();
     super.activate(event);
   }
-
-  // public deactivate(event?: Event): void {
-  //   this.ctrl.downQueue.addFrom(this.ctrl.nextFloors!);
-  //   super.deactivate(event);
-  // }
 }
