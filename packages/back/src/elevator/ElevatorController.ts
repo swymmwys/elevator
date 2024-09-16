@@ -105,17 +105,16 @@ export class ElevatorController {
   }
 
   queueFloorFrom(floor: number, direction: Direction): void {
-    if (this.direction === direction) {
-      if (direction === "down" && floor < this.currentFloor) {
-        this.downQ.add(floor);
-      } else {
-        this.upQ.add(floor);
-      }
-      if (direction === "up" && floor > this.currentFloor) {
-        this.upQ.add(floor);
-      } else {
-        this.downQ.add(floor);
-      }
+    const sameDirection = this.direction === direction;
+
+    if (sameDirection && direction === "down" && floor < this.currentFloor) {
+      this.downQ.add(floor);
+    } else if (
+      sameDirection &&
+      direction === "up" &&
+      floor > this.currentFloor
+    ) {
+      this.upQ.add(floor);
     } else {
       switch (direction) {
         case "up": {
