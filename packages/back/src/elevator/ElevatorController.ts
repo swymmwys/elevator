@@ -7,7 +7,7 @@ export class ElevatorController {
   private _currentFloor: number = 0;
 
   constructor(
-    readonly door: ElevatorDoor,
+    public readonly door: ElevatorDoor,
     private readonly onChange?: (status: ElevatorStatus) => void,
   ) {
     // todo: I don't like it, but works for now
@@ -42,25 +42,7 @@ export class ElevatorController {
 
   private _activeQ: ElevatorQueue | null = null;
 
-  useDownQ(): void {
-    this._activeQ = this.downQ;
-
-    this.callOnChange();
-  }
-
-  useUpQ(): void {
-    this._activeQ = this.upQ;
-
-    this.callOnChange();
-  }
-
   get direction(): Direction {
-    if (this._activeQ === this.upQ) {
-      return "up";
-    } else if (this._activeQ === this.downQ) {
-      return "down";
-    }
-
     switch (this._activeQ) {
       case this.upQ: {
         return "up";
@@ -95,10 +77,18 @@ export class ElevatorController {
   }
 
   queueFloor(floor: number): void {
+    let updatedQ: ElevatorQueue;
+
     if (floor > this.currentFloor) {
       this.upQ.add(floor);
+      updatedQ = this.upQ;
     } else {
       this.downQ.add(floor);
+      updatedQ = this.downQ;
+    }
+
+    if (this.direction === "none") {
+      this._activeQ = updatedQ;
     }
 
     this.callOnChange();
@@ -124,8 +114,21 @@ export class ElevatorController {
         }
         break;
       }
-      default:
+      case "none": {
+        if (floor > this.currentFloor) {
+          this.upQ.add(floor);
+          this._activeQ = this.upQ;
+        } else {
+          this.downQ.add(floor);
+          this._activeQ = this.downQ;
+        }
         break;
+      }
+      default: {
+        break;
+      }
     }
+
+    this.callOnChange();
   }
 }

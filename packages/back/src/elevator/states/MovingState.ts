@@ -26,12 +26,6 @@ export class MovingState extends BaseElevator {
       return;
     }
 
-    if (nextFloor > this.ctrl.currentFloor) {
-      this.ctrl.useUpQ();
-    } else {
-      this.ctrl.useDownQ();
-    }
-
     this.startMoving();
   }
 

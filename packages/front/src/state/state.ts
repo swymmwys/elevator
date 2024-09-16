@@ -24,7 +24,7 @@ export function createState(): State {
   });
 
   // todo: don't like that it's defined here, probably should go to some common place for effects
-  effect(function goToElevatorIfElevatorArrived() {
+  effect(function goToElevatorWhenArrived() {
     const elevatorArrived =
       user.currentFloor.value === elevator.value.currentFloor &&
       elevator.value.doorStatus === "open";
@@ -41,7 +41,7 @@ export function createState(): State {
   });
 
   // user will go out on the latest requested floor
-  effect(function goToTheFloorIfUserArrived() {
+  effect(function goToTheFloorWhenArrived() {
     const userArrived =
       user.requestedFloor.value === elevator.value.currentFloor &&
       elevator.value.doorStatus === "open";
