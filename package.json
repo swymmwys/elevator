@@ -1,0 +1,7 @@
+{
+  "name": "elevator-simulator",
+  "scripts": {
+    "start": "npm run start:dev --workspace=elevator-backend & npm run dev --workspace=elevator-frontend"
+  },
+  "workspaces": ["./packages/*"]
+}
