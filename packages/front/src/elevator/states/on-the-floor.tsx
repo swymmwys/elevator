@@ -37,7 +37,7 @@ export const OnTheFloor: FunctionalComponent = () => {
       <h1>You are on the floor №{floor}</h1>
       <div>
         <button onClick={onUpClick}>up</button>
-        <button onClick={onDownClick}>dow</button>
+        <button onClick={onDownClick}>down</button>
       </div>
       <Display />
       <Door />
