@@ -51,7 +51,7 @@ export class DownQ extends ElevatorQueue {
   }
 
   override toArray(): number[] {
-    return this.queue.reverse().slice(0);
+    return this.queue.slice(0).reverse();
   }
 
   override poll(): void {
