@@ -13,4 +13,5 @@ When you are inside - you can choose any floor (positive or negative value) and 
 
 ### Project todos 
  - implement user friendly UI
+ - save user state on page refresh
  - complete all todos spread inside the projects ;)
